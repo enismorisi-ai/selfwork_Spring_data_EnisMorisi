@@ -3,6 +3,8 @@ package it.aulab.selfwork_spring_data.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +15,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="authors")
+// @JsonIgnoreProperties({"id"})
 public class Author {
 
     @Id

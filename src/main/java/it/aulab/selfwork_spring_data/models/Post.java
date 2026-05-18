@@ -3,6 +3,9 @@ package it.aulab.selfwork_spring_data.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +18,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="posts")
+// @JsonIgnoreProperties({"author"})
 public class Post {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -32,10 +36,13 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name="author_id")
+    @JsonIgnoreProperties({"posts"})
     private Author author;
 
-    @OneToMany(mappedBy="post")
+    @OneToMany(mappedBy="post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({"posts"})
     private List<Comment> comments = new ArrayList<Comment>();
+
 
     public Post() {
     }
