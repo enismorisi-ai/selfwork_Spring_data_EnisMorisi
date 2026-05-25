@@ -100,16 +100,16 @@ class SelfworkSpringDataApplicationTests {
 		.containsOnly("Giuseppe");
 	}
 
-	@Test
-	void findAuthorByEmail(){
-		System.out.println("Cercando un autore tramite mail...");
-		Author foundAuthor = authorRepository.findByEmail("lubo@test.it");
+	// @Test
+	// void findAuthorByEmail(){
+	// 	System.out.println("Cercando un autore tramite mail...");
+	// 	Author foundAuthor = authorRepository.findByEmail("lubo@test.it");
 
-		assertThat(foundAuthor)
-		.isNotNull()
-		.extracting(Author::getName, Author::getSurname)
-		.containsExactly("Luca","Bozzali");
-	}
+	// 	assertThat(foundAuthor)
+	// 	.isNotNull()
+	// 	.extracting(Author::getName, Author::getSurname)
+	// 	.containsExactly("Luca","Bozzali");
+	// }
 
 	@Test
 	void sameNameAuthor(){

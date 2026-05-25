@@ -18,5 +18,5 @@ where firstname = "Luca"
 and lastname = "Campolunghi";
 
 insert into comments(email, body, date, post_id) value
-("enmo@gmail.com", "quo usque tandem abutere", "20260517", 19),
-("enmo@gmail.com", "Ego quoque latine loquor", "20260517", 22);
+("enmo@gmail.com", "quo usque tandem abutere", "20260517", 1),
+("enmo@gmail.com", "Ego quoque latine loquor", "20260517", 1);

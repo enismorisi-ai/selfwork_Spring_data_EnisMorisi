@@ -20,8 +20,8 @@ import it.aulab.selfwork_spring_data.models.Post;
 import it.aulab.selfwork_spring_data.repositories.CommentRepository;
 
 @RestController
-@RequestMapping("/comments")
-public class CommentController {
+@RequestMapping("/api/comments")
+public class CommentRestController {
     @Autowired
     CommentRepository commentRepository;
 

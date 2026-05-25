@@ -1,62 +1,76 @@
 package it.aulab.selfwork_spring_data.controllers;
 
-import java.util.List;
-
+import it.aulab.selfwork_spring_data.repositories.AuthorRepository;
+import it.aulab.selfwork_spring_data.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
-import it.aulab.selfwork_spring_data.models.Comment;
+import it.aulab.selfwork_spring_data.dtos.PostDto;
 import it.aulab.selfwork_spring_data.models.Post;
-import it.aulab.selfwork_spring_data.repositories.CommentRepository;
-import it.aulab.selfwork_spring_data.repositories.PostRepository;
+import it.aulab.selfwork_spring_data.services.CrudService;
+import it.aulab.selfwork_spring_data.services.PostService;
 
-@RestController
+@Controller
 @RequestMapping("/posts")
 public class PostController {
+
+    private final PostRepository postRepository;
+
+    // @Autowired
+    // PostService postService;
     @Autowired
-    PostRepository postRepository;
+    CrudService<PostDto, Post, Long> postService;
+
     @Autowired
-    CommentRepository commentRepository;
+    AuthorRepository authorRepository;
 
-    @GetMapping //ok
-    public List<Post> getAllPosts(){
-        return postRepository.findAll();
+    PostController(AuthorRepository authorRepository, PostRepository postRepository) {
+        this.authorRepository = authorRepository;
+        this.postRepository = postRepository;
     }
 
-    @GetMapping("/{id}") //ok
-    public Post getPost(@PathVariable("id") Long id){
-        return postRepository.findById(id).get();
+    @GetMapping
+    public String postsView(Model viewModel){
+        viewModel.addAttribute("title", "All Posts");
+        viewModel.addAttribute("posts", postService.readAll());
+        return "posts";
     }
 
-    @PostMapping //ok
-    public Post createPost(@RequestBody Post post){
-        return postRepository.save(post);
+    @GetMapping("/create")
+    public String createPost(Model viewModel){
+        viewModel.addAttribute("title", "Create a new Post");
+        viewModel.addAttribute("post", new Post());
+        viewModel.addAttribute("authors", authorRepository.findAll());
+        return "createPost";
     }
 
-    @PutMapping("/{id}") //ok
-    public Post updatePost(@PathVariable("id") Long id, @RequestBody Post post){
-        post.setId(id);
-        return postRepository.save(post);
+    @PostMapping
+    public String addPost(@ModelAttribute("post") Post post){
+        postService.create(post);
+        return "redirect:/posts";
     }
 
-   @DeleteMapping("/{id}") // ok
-   public void removePost(@PathVariable("id") Long id){
-    if(postRepository.existsById(id)){
-        postRepository.deleteById(id);
-    }
-    else{
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post non trovato");
-    }
-   }
+    @GetMapping("/remove/{id}")
+    public String removePost(@PathVariable("id") Long id){
+        postService.delete(id);
+        return "redirect:/posts";
+    }    
 
+    @GetMapping("/update/{id}")
+    public String modifyPost(@PathVariable("id") Long id, Model viewModel){
+        viewModel.addAttribute("title", "Edit post");
+        viewModel.addAttribute("post", postService.read(id));
+        viewModel.addAttribute("authors", authorRepository.findAll());
+        return "updatePost";
+    }
+
+    // Ho creato la edit (cioe la vista per modificare ol post, devo procedere con l'update)
+    
 }

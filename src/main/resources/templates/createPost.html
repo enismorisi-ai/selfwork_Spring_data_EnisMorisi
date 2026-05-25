@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title}">Thymeleaf</title>
+    <!-- BS CSS  -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <!-- Custom CSS  -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="/index.html">Homepage</a></li>
+            <li><a th:href="@{/authors}">Authors</a></li>
+            <li><a th:href="@{/authors/create}">Add author</a></li>
+            <li><a th:href="@{/posts}">All posts</a></li>
+        </ul>
+    </nav>
+    
+    <h1 class="text-center display-1 text-primary mb-3" th:text="${title}"></h1>
+    
+    <div class="container">
+        <div class="row">
+            <header class="col-12">
+                <h2 class="display-6 text-center">Add a post</h2>
+            </header>
+            <div class="col-12 my-4">
+                <form th:action="@{/posts}" method="post" th:object="${post}">
+                    <div class="mb-3">
+                        <div class="col">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" id="title" class="form-control" th:field="*{title}" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col">
+                            <label for="body" class="form-label">Body</label>
+                            <textarea id="body" class="form-control" th:field="*{body}"></textarea>
+                            <!-- <input type="text" id="body" class="form-control" th:field="*{body}" required> -->
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="publishDate" class="form-label">Publish Date</label>
+                        <input type="text" id="publishDate" class="form-control" th:field="*{publishDate}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="author" class="form-label">Author</label>
+                        <select id="author" th:field="*{author}" class="form-select">
+                            <option th:each="author:${authors}" th:value="${author.id}" th:text="${author.name}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="reset" class="btn btn-danger">Reset</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>
