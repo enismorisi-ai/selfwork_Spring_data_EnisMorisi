@@ -1,9 +1,7 @@
 package it.aulab.selfwork_spring_data.controllers;
 
 import it.aulab.selfwork_spring_data.repositories.AuthorRepository;
-import it.aulab.selfwork_spring_data.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import it.aulab.selfwork_spring_data.dtos.PostDto;
 import it.aulab.selfwork_spring_data.models.Post;
 import it.aulab.selfwork_spring_data.services.CrudService;
-import it.aulab.selfwork_spring_data.services.PostService;
 
 @Controller
 @RequestMapping("/posts")
 public class PostController {
-
-    private final PostRepository postRepository;
 
     // @Autowired
     // PostService postService;
@@ -30,11 +25,6 @@ public class PostController {
 
     @Autowired
     AuthorRepository authorRepository;
-
-    PostController(AuthorRepository authorRepository, PostRepository postRepository) {
-        this.authorRepository = authorRepository;
-        this.postRepository = postRepository;
-    }
 
     @GetMapping
     public String postsView(Model viewModel){
@@ -57,12 +47,14 @@ public class PostController {
         return "redirect:/posts";
     }
 
+    // remove
     @GetMapping("/remove/{id}")
     public String removePost(@PathVariable("id") Long id){
         postService.delete(id);
         return "redirect:/posts";
     }    
 
+    // edit
     @GetMapping("/update/{id}")
     public String modifyPost(@PathVariable("id") Long id, Model viewModel){
         viewModel.addAttribute("title", "Edit post");
@@ -71,6 +63,11 @@ public class PostController {
         return "updatePost";
     }
 
-    // Ho creato la edit (cioe la vista per modificare ol post, devo procedere con l'update)
-    
+    // Ho creato la edit (cioe la vista per modificare il post, devo procedere con l'update)
+
+    @PostMapping("update")
+    public String updateProduct(@ModelAttribute("post") Post post){
+        postService.update(post.getId(), post);
+        return "redirect:/posts";
+    }
 }

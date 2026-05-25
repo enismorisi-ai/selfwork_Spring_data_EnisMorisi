@@ -48,9 +48,13 @@ public class PostService implements CrudService<PostDto,Post,Long>{
     }
 
     @Override
-    public PostDto update(Long key, Post model) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    public PostDto update(Long id, Post post) {
+        if(postRepository.existsById(id)){
+            post.setId(id);
+            return mapper.map(postRepository.save(post), PostDto.class);
+        } else{
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override

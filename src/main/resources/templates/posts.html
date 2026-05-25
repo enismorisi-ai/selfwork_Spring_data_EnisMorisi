@@ -18,6 +18,7 @@
             <li><a th:href="@{/authors}">Authors</a></li>
             <li><a th:href="@{/authors/create}">Add author</a></li>
             <li><a th:href="@{/posts}">All posts</a></li>
+            <li><a th:href="@{/comments}">All comments</a></li>
         </ul>
     </nav>
 
@@ -42,6 +43,7 @@
                             <th>Body</th>
                             <th>Publish date</th>
                             <th>Author</th>
+                            <!-- <th>Comments</th> -->
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -51,7 +53,7 @@
                             <td th:text="${post.title}"></td>
                             <td th:text="${post.body}"></td>
                             <td th:text="${post.publishDate}"></td>
-                            <td th:text="${post.authorId}"></td> 
+                            <td th:text="${post.authorId}"></td>
                             <td>
                                 <a th:href="@{/posts/remove/{id}(id=${post.id})}" class="btn btn-danger">
                                     <i class="fa-solid fa-trash"></i>

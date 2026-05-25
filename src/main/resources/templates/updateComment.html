@@ -26,36 +26,38 @@
     <div class="container">
         <div class="row">
             <header class="col-12">
-                <h2 class="display-6 text-center">Add a post</h2>
+                <h2 class="display-6 text-center">Edit a comment</h2>
             </header>
             <div class="col-12 my-4">
-                <form th:action="@{/posts}" method="post" th:object="${post}">
+                <form th:action="@{/comment/update}" method="post" th:object="${comment}">
+
+                    <input type="hidden" th:field="*{id}">
+
                     <div class="mb-3">
                         <div class="col">
-                            <label for="title" class="form-label">Title</label>
-                            <input type="text" id="title" class="form-control" th:field="*{title}" required>
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" class="form-control" th:field="*{email}" required>
                         </div>
                     </div>
                     <div class="mb-3">
                         <div class="col">
                             <label for="body" class="form-label">Body</label>
                             <textarea id="body" class="form-control" th:field="*{body}"></textarea>
-                            <!-- <input type="text" id="body" class="form-control" th:field="*{body}" required> -->
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="publishDate" class="form-label">Publish Date</label>
-                        <input type="text" id="publishDate" class="form-control" th:field="*{publishDate}" required>
+                        <label for="date" class="form-label">Date</label>
+                        <input type="text" id="date" class="form-control" th:field="*{date}" required>
                     </div>
                     <div class="mb-3">
-                        <label for="author" class="form-label">Author</label>
-                        <select id="author" th:field="*{author}" class="form-select">
-                            <option th:each="author:${authors}" th:value="${author.id}" th:text="${author.name}">
+                        <label for="post" class="form-label">Post</label>
+                        <select id="post" th:field="*{postId}" class="form-select">
+                            <option th:each="post:${posts}" th:value="${post.id}" th:text="${post.title}">
                             </option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="submit" class="btn btn-success">Edit</button>
                         <button type="reset" class="btn btn-danger">Reset</button>
                     </div>
                 </form>

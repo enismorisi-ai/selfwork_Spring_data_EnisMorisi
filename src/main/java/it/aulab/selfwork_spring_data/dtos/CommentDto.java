@@ -6,7 +6,7 @@ public class CommentDto {
     private String email;
     private String body;
     private String date;
-    private String post_id;
+    private String postId;
 
     public CommentDto(){}
 
@@ -42,13 +42,14 @@ public class CommentDto {
         this.date = date;
     }
 
-    public String getPost_id() {
-        return post_id;
+    public String getPostId() {
+        return postId;
     }
 
-    public void setPost_id(String post_id) {
-        this.post_id = post_id;
+    public void setPostId(String postId) {
+        this.postId = postId;
     }
+
 
     
 }

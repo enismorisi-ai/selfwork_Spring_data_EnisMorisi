@@ -25,8 +25,8 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1 class="text-center display-1 text-primary mb-3" th:text="${title}">All the Authors</h1>
-                <a th:href="@{/authors/create}" class="btn btn-info"><i class="fa-solid fa-plus"></i></a>
+                <h1 class="text-center display-1 text-primary mb-3" th:text="${title}">All the comments</h1>
+                <a th:href="@{/comments/create}" class="btn btn-info"><i class="fa-solid fa-plus"></i></a>
             </div>
         </div>
     </div>
@@ -39,17 +39,28 @@
                     <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Name</th>
-                            <th>Surname</th>
                             <th>Email</th>
+                            <th>Body</th>
+                            <th>Date</th>
+                            <th>Post</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="author:${authors}">
-                            <td th:text="${author.id}"></td>
-                            <td th:text="${author.name}"></td>
-                            <td th:text="${author.surname}"></td>
-                            <td th:text="${author.email}"></td>
+                        <tr th:each="comment:${comments}">
+                            <td th:text="${comment.id}"></td> <!-- queste proprieta si riferiscono alle proprieta di CommentDto e non di Comment-->
+                            <td th:text="${comment.email}"></td>
+                            <td th:text="${comment.body}"></td>
+                            <td th:text="${comment.date}"></td>
+                            <td th:text="${comment.postId}"></td>
+                            <td>
+                                <a th:href="@{/comments/remove/{id}(id=${comment.id})}" class="btn btn-danger">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                                <a th:href="@{/comments/update/{id}(id=${comment.id})}" class="btn btn-warning">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
