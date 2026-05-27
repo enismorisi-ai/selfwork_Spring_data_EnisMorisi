@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav>
+    <nav class="d-flex justify-content-between align-items-center bg-primary-subtle px-5">
         <ul>
             <li><a href="/index.html">Homepage</a></li>
             <li><a th:href="@{/authors}">Authors</a></li>
@@ -20,6 +20,12 @@
             <li><a th:href="@{/posts}">All posts</a></li>
             <li><a th:href="@{/comments}">All comments</a></li>
         </ul>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-danger">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </button>
+        </form>
     </nav>
 
     <div class="container">
